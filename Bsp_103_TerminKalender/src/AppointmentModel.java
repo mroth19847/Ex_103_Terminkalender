@@ -21,6 +21,11 @@ public class AppointmentModel extends AbstractListModel{
         fireIntervalAdded(this, app.size()-1, app.size()-1);
     }
     
+    public void delete(Appointment a){
+        app.remove(a);
+        fireContentsChanged(this, 0, app.size()-1);
+    }
+    
     public void load(){
         
     }
