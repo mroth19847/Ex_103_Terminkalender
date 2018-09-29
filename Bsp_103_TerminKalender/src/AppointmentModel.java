@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.AbstractListModel;
 
 
@@ -24,17 +25,17 @@ public class AppointmentModel extends AbstractListModel{
     
     public void add(Appointment a){
         app.add(a);
-        fireIntervalAdded(this, app.size()-1, app.size()-1);
+       sortAppointments();
     }
     
     public void change(Appointment a, int idx){
         app.set(idx, a);
-        fireContentsChanged(this, 0, app.size()-1);
+        sortAppointments();
     }
     
     public void delete(int idx){
         app.remove(idx);
-        fireContentsChanged(this, 0, app.size()-1);
+        sortAppointments();
     }
     
     public void loadData(File f) throws Exception{
@@ -46,6 +47,12 @@ public class AppointmentModel extends AbstractListModel{
             }
         } catch (EOFException eofExc) {}
         ois.close();
+        sortAppointments();
+    }
+    
+    private void sortAppointments(){
+        Collections.sort(app, new SortAppointments());
+        fireContentsChanged(this, 0, app.size()-1);
     }
     
     public void saveData(File f) throws Exception{
