@@ -1,6 +1,7 @@
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Appointment implements Serializable{
     private LocalDateTime date;
@@ -26,6 +27,13 @@ public class Appointment implements Serializable{
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm");
+        return String.format("%s --> %s",dtf.format(date), text);
+    }
+    
     
      
 }

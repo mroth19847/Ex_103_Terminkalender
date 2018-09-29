@@ -95,7 +95,11 @@ public class AppointmentGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void AppAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppAddActionPerformed
-        // TODO add your handling code here:
+        AppointmentDlg dlg = new AppointmentDlg(this, true, true);
+        dlg.setVisible(true);
+        if(dlg.isOk()){
+            
+        }
     }//GEN-LAST:event_AppAddActionPerformed
 
     private void AppDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppDeleteActionPerformed
