@@ -2,10 +2,12 @@
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AppointmentGUI extends javax.swing.JFrame {
 
     private AppointmentModel bl = new AppointmentModel();
+
     public AppointmentGUI() {
         initComponents();
         AppList.setModel(bl);
@@ -95,19 +97,35 @@ public class AppointmentGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void AppAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppAddActionPerformed
-        AppointmentDlg dlg = new AppointmentDlg(this, true, true);
+        AppointmentDlg dlg = new AppointmentDlg(this, true);
         dlg.setVisible(true);
-        if(dlg.isOk()){
-            
+        if (dlg.isOk()) {
+            Appointment app = dlg.getNewAppointment();
+            bl.add(app);
         }
     }//GEN-LAST:event_AppAddActionPerformed
 
     private void AppDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppDeleteActionPerformed
-        // TODO add your handling code here:
+        int sel = AppList.getSelectedIndex();
+        if (sel > -1) {
+            bl.delete(sel);
+        } else {
+            JOptionPane.showMessageDialog(null, "Bitte wählen Sie zuerst einen Termin aus!");
+        }
     }//GEN-LAST:event_AppDeleteActionPerformed
 
     private void AppChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppChangeActionPerformed
-        // TODO add your handling code here:
+        int sel = AppList.getSelectedIndex();
+        if (sel > -1) {
+            AppointmentDlg dlg = new AppointmentDlg(this, true);
+            dlg.setVisible(true);
+            if (dlg.isOk()) {
+                Appointment app = dlg.getNewAppointment();
+                bl.change(app, sel);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Bitte wählen Sie zuerst einen Termin aus!");
+        }
     }//GEN-LAST:event_AppChangeActionPerformed
 
     /**

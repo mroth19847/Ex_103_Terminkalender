@@ -9,7 +9,7 @@ public class AppointmentDlg extends javax.swing.JDialog {
     private boolean ok;
     private Appointment newAppointment;
 
-    public AppointmentDlg(java.awt.Frame parent, boolean modal, boolean add) {
+    public AppointmentDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }

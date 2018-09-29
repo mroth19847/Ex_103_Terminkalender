@@ -27,8 +27,13 @@ public class AppointmentModel extends AbstractListModel{
         fireIntervalAdded(this, app.size()-1, app.size()-1);
     }
     
-    public void delete(Appointment a){
-        app.remove(a);
+    public void change(Appointment a, int idx){
+        app.set(idx, a);
+        fireContentsChanged(this, 0, app.size()-1);
+    }
+    
+    public void delete(int idx){
+        app.remove(idx);
         fireContentsChanged(this, 0, app.size()-1);
     }
     
@@ -51,5 +56,4 @@ public class AppointmentModel extends AbstractListModel{
         oos.flush();
         oos.close();
     }
-    
 }
