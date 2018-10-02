@@ -29,6 +29,7 @@ public class AppointmentGUI extends javax.swing.JFrame {
         AppChange = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         AppList = new javax.swing.JList<>();
+        btcalender = new javax.swing.JButton();
 
         Menu.setText("Termin");
 
@@ -65,7 +66,7 @@ public class AppointmentGUI extends javax.swing.JFrame {
             }
         });
 
-        AppList.setBorder(javax.swing.BorderFactory.createTitledBorder("Kalender"));
+        AppList.setBorder(javax.swing.BorderFactory.createTitledBorder("Termine"));
         AppList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -74,17 +75,32 @@ public class AppointmentGUI extends javax.swing.JFrame {
         AppList.setComponentPopupMenu(ContextMenu);
         jScrollPane1.setViewportView(AppList);
 
+        btcalender.setText("Kalender");
+        btcalender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btcalenderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btcalender, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btcalender)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -131,6 +147,11 @@ public class AppointmentGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AppChangeActionPerformed
 
+    private void btcalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcalenderActionPerformed
+        CalenderGUI win = new CalenderGUI(bl);
+        win.setVisible(true);
+    }//GEN-LAST:event_btcalenderActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -174,6 +195,7 @@ public class AppointmentGUI extends javax.swing.JFrame {
     private javax.swing.JList<String> AppList;
     private javax.swing.JPopupMenu ContextMenu;
     private javax.swing.JMenu Menu;
+    private javax.swing.JButton btcalender;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
