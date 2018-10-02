@@ -120,6 +120,7 @@ public class AppointmentGUI extends javax.swing.JFrame {
         int sel = AppList.getSelectedIndex();
         if (sel > -1) {
             AppointmentDlg dlg = new AppointmentDlg(this, true);
+            dlg.displayDetails(((Appointment)bl.getElementAt(sel)));
             dlg.setVisible(true);
             if (dlg.isOk()) {
                 Appointment app = dlg.getNewAppointment();
