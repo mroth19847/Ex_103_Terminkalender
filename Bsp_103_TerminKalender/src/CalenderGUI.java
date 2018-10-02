@@ -9,18 +9,28 @@ public class CalenderGUI extends javax.swing.JFrame {
 
     private ArrayList<DayInCal> days = new ArrayList<>();
     private AppointmentModel bl = new AppointmentModel();
-    
+    private Month current;
+
     public CalenderGUI(AppointmentModel bl) {
         initComponents();
         this.bl = bl;
-        lbmonth.setText(""+LocalDate.now().getMonth());
+        lbmonth.setText("" + LocalDate.now().getMonth());
+        current = LocalDate.now().getMonth();
+        fillList(current);
     }
-    
-    private void fillList(){
-        LocalDate start = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1);
-        int x = 0,y = 0;
-        while(!start.getMonth().equals(LocalDate.now().getMonth())){
-            days.add(new DayInCal());
+
+    private void fillList(Month m) {
+        LocalDate start = LocalDate.of(LocalDate.now().getYear(), m, 1);
+        int x = 0, y = 0;
+        while (start.getMonth().equals(m)) {
+            days.add(new DayInCal(start, x, y));
+            if (x == 600) {
+                x = 0;
+                y += 100;
+            } else {
+                x += 100;
+            }
+            start = start.plusDays(1);
         }
     }
 
@@ -36,13 +46,21 @@ public class CalenderGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbback.setText("<-");
+        lbback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lbbackActionPerformed(evt);
+            }
+        });
 
         lbup.setText("->");
+        lbup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lbupActionPerformed(evt);
+            }
+        });
 
         lbmonth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbmonth.setText("jLabel1");
-
-        GraphicsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
         javax.swing.GroupLayout GraphicsPanelLayout = new javax.swing.GroupLayout(GraphicsPanel);
         GraphicsPanel.setLayout(GraphicsPanelLayout);
@@ -62,7 +80,7 @@ public class CalenderGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lbback)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbmonth, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                .addComponent(lbmonth, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbup))
             .addGroup(layout.createSequentialGroup()
@@ -73,10 +91,11 @@ public class CalenderGUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbback, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbup, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbmonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbmonth, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbback, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbup, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(GraphicsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -85,11 +104,27 @@ public class CalenderGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lbbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbbackActionPerformed
+        current = current.plus(-1);
+        fillList(current);
+        lbmonth.setText(""+current);
+        repaint();
+    }//GEN-LAST:event_lbbackActionPerformed
+
+    private void lbupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbupActionPerformed
+        current = current.plus(1);
+        fillList(current);
+        lbmonth.setText(""+current);
+        repaint();
+    }//GEN-LAST:event_lbupActionPerformed
+
     @Override
     public void paint(Graphics grphcs) {
         super.paint(grphcs);
         Graphics2D g = (Graphics2D) GraphicsPanel.getGraphics();
-        
+        for (DayInCal day : days) {
+            day.draw(g);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

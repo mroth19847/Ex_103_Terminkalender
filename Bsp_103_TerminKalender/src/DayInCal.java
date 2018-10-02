@@ -64,11 +64,11 @@ public class DayInCal {
         g.drawRect(x, y, 100,100);
         g.setFont(new Font("Carstellar",Font.PLAIN, 12));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM");
-        g.drawString(""+dtf.format(date), x+5, y-20);
+        g.drawString(""+dtf.format(date), x+5, y+20);
         if(hasTermin){
             dtf = DateTimeFormatter.ofPattern("HH:mm");
-            g.drawString(""+dtf.format(time), x+5, y-40);
-            g.drawString(text, x, y-60);
+            g.drawString(""+dtf.format(time), x+5, y+40);
+            g.drawString(text, x, y+60);
         }
         return g;
     }
