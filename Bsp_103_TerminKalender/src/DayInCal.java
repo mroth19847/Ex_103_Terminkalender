@@ -51,6 +51,14 @@ public class DayInCal {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
     
      
         
@@ -68,7 +76,7 @@ public class DayInCal {
         if(hasTermin){
             dtf = DateTimeFormatter.ofPattern("HH:mm");
             g.drawString(""+dtf.format(time), x+5, y+40);
-            g.drawString(text, x, y+60);
+            g.drawString(text, x+20, y+60);
         }
         return g;
     }

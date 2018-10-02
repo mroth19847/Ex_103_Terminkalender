@@ -4,25 +4,28 @@ import java.awt.Graphics2D;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CalenderGUI extends javax.swing.JFrame {
 
     private ArrayList<DayInCal> days = new ArrayList<>();
     private AppointmentModel bl = new AppointmentModel();
-    private Month current;
+    private LocalDate current;
 
     public CalenderGUI(AppointmentModel bl) {
         initComponents();
         this.bl = bl;
-        lbmonth.setText("" + LocalDate.now().getMonth());
-        current = LocalDate.now().getMonth();
+        current = LocalDate.now();
+        lbmonth.setText(current.getMonth()+" "+current.getYear());
         fillList(current);
     }
 
-    private void fillList(Month m) {
-        LocalDate start = LocalDate.of(LocalDate.now().getYear(), m, 1);
+    private void fillList(LocalDate m) {
+        LocalDate start = LocalDate.of(LocalDate.now().getYear(), m.getMonth(), 1);
         int x = 0, y = 0;
-        while (start.getMonth().equals(m)) {
+        while (start.getMonth().equals(m.getMonth())) {
             days.add(new DayInCal(start, x, y));
             if (x == 600) {
                 x = 0;
@@ -105,16 +108,16 @@ public class CalenderGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbbackActionPerformed
-        current = current.plus(-1);
+        current = current.plusMonths(-1);
         fillList(current);
-        lbmonth.setText(""+current);
+        lbmonth.setText(current.getMonth()+" "+current.getYear());
         repaint();
     }//GEN-LAST:event_lbbackActionPerformed
 
     private void lbupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbupActionPerformed
-        current = current.plus(1);
+        current = current.plusMonths(1);
         fillList(current);
-        lbmonth.setText(""+current);
+        lbmonth.setText(current.getMonth()+" "+current.getYear());
         repaint();
     }//GEN-LAST:event_lbupActionPerformed
 
@@ -123,6 +126,13 @@ public class CalenderGUI extends javax.swing.JFrame {
         super.paint(grphcs);
         Graphics2D g = (Graphics2D) GraphicsPanel.getGraphics();
         for (DayInCal day : days) {
+            try {
+                Appointment a = bl.isApp(day.getDate());
+                day.setHasTermin(true);
+                day.setText(a.getText());
+                day.setTime(a.getDate().toLocalTime());
+            } catch (Exception ex) {
+            }
             day.draw(g);
         }
     }

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.AbstractListModel;
@@ -63,5 +64,14 @@ public class AppointmentModel extends AbstractListModel {
         }
         oos.flush();
         oos.close();
+    }
+    
+    public Appointment isApp(LocalDate d)throws Exception{
+        for (Appointment a : app) {
+            if(d.equals(a.getDate().toLocalDate())){
+                return a;
+            }
+        }
+        throw new Exception("not found");
     }
 }
