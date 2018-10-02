@@ -14,6 +14,7 @@ public class AppointmentGUI extends javax.swing.JFrame {
         try {
             bl.loadData(new File("./appointments.ser"));
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

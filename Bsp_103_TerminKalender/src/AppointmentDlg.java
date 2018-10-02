@@ -16,6 +16,15 @@ public class AppointmentDlg extends javax.swing.JDialog {
     public boolean isOk() {
         return ok;
     }
+    
+    public void displayDetails(Appointment a){
+        tfday.setText(""+a.getDate().getDayOfMonth());
+        tfmonth.setText(""+a.getDate().getMonthValue());
+        tfyear.setText(""+a.getDate().getYear());
+        tfhour.setText(""+a.getDate().getHour());
+        tfminute.setText(""+a.getDate().getMinute());
+        tftext.setText(""+a.getText());
+    }
 
     public Appointment getNewAppointment() {
         return newAppointment;
